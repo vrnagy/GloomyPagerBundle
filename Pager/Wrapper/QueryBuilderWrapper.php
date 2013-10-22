@@ -157,8 +157,30 @@ class QueryBuilderWrapper implements Wrapper
             }
 
             switch ( $operator ) {
-
                 default:
+                case "startsWith":
+                    if (isset($this->_config['force_case_insensitive'])) { // Force case insensitive (ie. for Oracle)
+                        $criteria[]    = $expr->like('UPPER('.$qualifier.')', ':'.$paramName);
+                        $this->_builder->setParameter($paramName, strtoupper($value.'%'));
+                    }
+                    else {
+                        $criteria[]    = $expr->like($qualifier, ':'.$paramName);
+                        $this->_builder->setParameter($paramName, $value.'%');
+                    }
+                    break;
+
+                case "endsWith":
+                    if (isset($this->_config['force_case_insensitive'])) { // Force case insensitive (ie. for Oracle)
+                        $criteria[]    = $expr->like('UPPER('.$qualifier.')', ':'.$paramName);
+                        $this->_builder->setParameter($paramName, strtoupper('%'.$value));
+                    }
+                    else {
+                        $criteria[]    = $expr->like($qualifier, ':'.$paramName);
+                        $this->_builder->setParameter($paramName, '%'.$value);
+                    }
+                    break;
+
+
                 case "c":
                 case "contains":
                     if (isset($this->_config['force_case_insensitive'])) { // Force case insensitive (ie. for Oracle)
