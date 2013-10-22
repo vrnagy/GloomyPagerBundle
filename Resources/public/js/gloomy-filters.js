@@ -1,4 +1,3 @@
-
 function showFiltersOpts( id ) {
 
     container   = $('#div_container_'+id);
@@ -87,7 +86,7 @@ function filtersOptsChanged( id ) {
 function resetFilter( id ) {
 
     input           = $('#input_filter_'+id).val('');
-    select          = $('#select_filter_'+id).val('contains');
+    select          = $('#select_filter_'+id).val('startsWith');
 
     filtersOptsChanged(id);
 }
