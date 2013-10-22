@@ -148,7 +148,7 @@ class QueryBuilderWrapper implements Wrapper
                 }
             }
 
-            $operator   = array_key_exists($key, $operators) ? $operators[$key] : 'contains';
+            $operator   = array_key_exists($key, $operators) ? $operators[$key] : 'startsWith';
             $paramName  = 'param'.++$paramNum;
 
             if (is_string($value) && ! strlen($value) && ! in_array($operator, array("null", "notNull", "n", "nn"))) {
